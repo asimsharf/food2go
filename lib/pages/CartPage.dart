@@ -51,7 +51,7 @@ class CartPage extends StatelessWidget {
               ),
               Expanded(
                 child: new MaterialButton(
-                  onPressed: () => _onValidBtnPressed(context),
+                  onPressed: () => _onValidBtnPressed(context, model),
                   color: Colors.red,
                   textColor: Colors.white,
                   elevation: 0.2,
@@ -183,20 +183,47 @@ class CartPage extends StatelessWidget {
   }
 }
 
-_onValidBtnPressed(context) {
+_onValidBtnPressed(BuildContext context, ProductsModel model) {
   Alert(
       context: context,
       title: "Your Order",
       content: Column(
         children: <Widget>[
           Row(
-            children: <Widget>[new Text('Total Price: 763')],
+            children: <Widget>[
+              new Text(
+                'Total Price: ${model.getCartPrice.toString()}',
+                style: TextStyle(
+                    fontFamily: ArabicFonts.Cairo,
+                    package: 'google_fonts_arabic',
+                    color: Colors.grey,
+                    fontSize: 15),
+              )
+            ],
           ),
           Row(
-            children: <Widget>[new Text('Total Item: 4')],
+            children: <Widget>[
+              new Text(
+                'Total Item: ${model.getCartList.length.toString()}',
+                style: TextStyle(
+                    fontFamily: ArabicFonts.Cairo,
+                    package: 'google_fonts_arabic',
+                    color: Colors.grey,
+                    fontSize: 15),
+              )
+            ],
           ),
           Row(
-            children: <Widget>[new Text('Pyment method: Cash')],
+            children: <Widget>[
+              new Text(
+                'Pyment method: Cash on delevery',
+                style: TextStyle(
+                    fontFamily: ArabicFonts.Cairo,
+                    package: 'google_fonts_arabic',
+                    color: Colors.grey,
+                    fontSize: 15),
+              )
+            ],
           ),
         ],
       ),
@@ -220,7 +247,11 @@ _onValidBtnPressed(context) {
             color: Colors.deepOrange,
             child: Text(
               "Cancel",
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(
+                  fontFamily: ArabicFonts.Cairo,
+                  package: 'google_fonts_arabic',
+                  color: Colors.white,
+                  fontSize: 20),
             ))
       ]).show();
 }
@@ -228,9 +259,9 @@ _onValidBtnPressed(context) {
 _onChackBtnPressedOkay(context) {
   Alert(
     context: context,
-    title: "the first text",
+    title: "Order Complet",
     type: AlertType.success,
-    desc: "order",
+    desc: "your order has been completed successfully",
     buttons: [
       DialogButton(
         child: Text(
