@@ -1,0 +1,57 @@
+name: food2go
+description: A new Flutter project.
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  splashscreen: ^1.2.0
+  video_player: ^0.10.0+8
+  font_awesome_flutter: ^8.4.0
+  polygon_clipper: ^1.0.1
+  flutter_screenutil: ^0.4.2
+  smooth_star_rating: 1.0.2
+  google_fonts_arabic: ^1.1.7
+  shared_preferences: ^0.5.2+1
+  json_annotation: ^2.0.0
+  cupertino_icons: ^0.1.2
+  http: ^0.12.0+1
+  flutter_swiper: ^1.1.4
+  flutter_statusbarcolor: any
+  superellipse_shape: ^0.1.5
+  flutter_speed_dial: ^1.0.8
+  google_maps_flutter: ^0.0.3+3
+  flutter_google_places: ^0.1.4
+  location: ^1.4.1
+  scoped_model: ^1.0.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/splash.png
+    - assets/food.png
+    - assets/videos/bg_v.mp4
+    - assets/images/drawerbg.jpg
+    - assets/images/restaurant.jpg
+    - assets/images/food.png
+    - assets/images/45.png
+    - assets/images/ic_launcher.png
+    - assets/images/login_contact.png
+
+  fonts:
+    - family: Amiri
+      fonts:
+      - asset: assets/fonts/Amiri-Bold.ttf
+      - asset: assets/fonts/Amiri-BoldItalic.ttf
+      - asset: assets/fonts/Amiri-Italic.ttf
+      - asset: assets/fonts/Amiri-Regular.ttf
