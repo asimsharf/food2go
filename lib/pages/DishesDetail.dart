@@ -48,8 +48,9 @@ class _ItemDetailState extends State<DishesDetail> {
   // final ProductsModel productsmodel =ProductsModel();
 
   //=============================================================
-  int priceP = 1;
+  int priceP = 0;
   int qty = 1;
+
   void add() {
     setState(() {
       qty++;
@@ -61,9 +62,11 @@ class _ItemDetailState extends State<DishesDetail> {
       if (qty != 1) qty--;
     });
   }
+
 //=============================================================
 
   List<String> _price;
+
   // List<>
   List<String> reportList = [
     "tomato",
@@ -452,25 +455,11 @@ class _ItemDetailState extends State<DishesDetail> {
               backgroundColor: Colors.deepOrange,
               heroTag: "btn1",
               onPressed: () {
-                // Navigator.push(context, MaterialPageRoute(
-                //   builder: (BuildContext context) => CartPage()
-                // ),
-                // );
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (BuildContext context) => CartPage()),
                 );
-
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => CartPage(
-                //       photo: widget.photo,
-                //       merchant_bg: widget.merchant_bg,
-                //       item_name: widget.item_name,
-                //       discount: widget.discount,
-                //       qty: qty)));
               },
               child: new Icon(Icons.shopping_cart),
             ),
@@ -502,18 +491,10 @@ class _ItemDetailState extends State<DishesDetail> {
             child: new Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                //              _buildBottomRow(item.price, item.qty),
                 new Container(
-                  //(qty * itemPrice).toString(),
-                  //width: (screenSize.width - 20) / 2,
-                  child: new Text(
-                    "Total Amount ${646}",
-                    textAlign: TextAlign.center,
-                    style: new TextStyle(
-                        fontFamily: ArabicFonts.Cairo,
-                        package: 'google_fonts_arabic',
-                        color: Colors.white,
-                        fontWeight: FontWeight.w700),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: _TotalItemPrice(priceP, qty),
                   ),
                 ),
                 GestureDetector(
@@ -539,12 +520,43 @@ class _ItemDetailState extends State<DishesDetail> {
       );
     });
   }
+
+  Widget _TotalItemPrice(int priceP, int qty) {
+    return new ScopedModelDescendant<ProductsModel>(
+        builder: (BuildContext context, Widget child, ProductsModel model) {
+      Widget TotalItemPrice;
+      if (priceP > 0) {
+        TotalItemPrice = Text(
+          "Total Amount ${model.getItemPrice(priceP, qty).toString()}",
+          textAlign: TextAlign.center,
+          style: new TextStyle(
+              fontFamily: ArabicFonts.Cairo,
+              package: 'google_fonts_arabic',
+              color: Colors.white,
+              fontWeight: FontWeight.w700),
+        );
+      } else {
+        TotalItemPrice = Text(
+          "Total Amount 0.0",
+          textAlign: TextAlign.center,
+          style: new TextStyle(
+              fontFamily: ArabicFonts.Cairo,
+              package: 'google_fonts_arabic',
+              color: Colors.white,
+              fontWeight: FontWeight.w700),
+        );
+      }
+      return TotalItemPrice;
+    });
+  }
 }
 
 class MultiSelectChip extends StatefulWidget {
   final List<String> reportList;
   final Function(List<String>) onSelectionChanged;
+
   MultiSelectChip(this.reportList, {this.onSelectionChanged});
+
   @override
   _MultiSelectChipState createState() => _MultiSelectChipState();
 }
@@ -552,6 +564,7 @@ class MultiSelectChip extends StatefulWidget {
 class _MultiSelectChipState extends State<MultiSelectChip> {
   // String selectedChoice = "";
   List<String> selectedChoices = List();
+
   _buildChoiceList() {
     List<Widget> choices = List();
 

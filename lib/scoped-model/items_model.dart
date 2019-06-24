@@ -20,6 +20,11 @@ class ProductsModel extends Model {
     return price;
   }
 
+  double getItemPrice(int price, int qty) {
+    print('+++++++############################price is :' + price.toString());
+    return double.parse((price * qty).toString());
+  }
+
   void addToCart(
       String id, int qty, int price, String photo, String item_name) {
     Item item = new Item(id, qty, price, photo, item_name);
