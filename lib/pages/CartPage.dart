@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:food2go/model/Item.dart';
 import 'package:google_fonts_arabic/fonts.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-import '../model/Item.dart';
 import '../scoped-model/items_model.dart';
 
 class CartPage extends StatelessWidget {
@@ -50,7 +51,7 @@ class CartPage extends StatelessWidget {
               ),
               Expanded(
                 child: new MaterialButton(
-                  onPressed: () {},
+                  onPressed: () => _onValidBtnPressed(context),
                   color: Colors.red,
                   textColor: Colors.white,
                   elevation: 0.2,
@@ -149,7 +150,7 @@ class CartPage extends StatelessWidget {
     );
   }
 
-  Widget _buildProductItems(
+  Widget _buildProductModel_Dishess(
       BuildContext context, int position, Item item, ProductsModel model) {
     return cartCard(item);
   }
@@ -159,7 +160,8 @@ class CartPage extends StatelessWidget {
     if (items.length > 0) {
       productCard = SafeArea(
         child: ListView.builder(
-          itemBuilder: (BuildContext context, int index) => _buildProductItems(
+          itemBuilder: (BuildContext context, int index) =>
+              _buildProductModel_Dishess(
                 context,
                 index,
                 items[index],
@@ -179,4 +181,72 @@ class CartPage extends StatelessWidget {
       builder: (BuildContext context, Widget child, ProductsModel model) {},
     );
   }
+}
+
+_onValidBtnPressed(context) {
+  Alert(
+      context: context,
+      title: "Your Order",
+      content: Column(
+        children: <Widget>[
+          Row(
+            children: <Widget>[new Text('Total Price: 763')],
+          ),
+          Row(
+            children: <Widget>[new Text('Total Item: 4')],
+          ),
+          Row(
+            children: <Widget>[new Text('Pyment method: Cash')],
+          ),
+        ],
+      ),
+      buttons: [
+        DialogButton(
+          onPressed: () => _onChackBtnPressedOkay(context),
+          color: Colors.deepOrange,
+          child: Text(
+            "okay",
+            style: TextStyle(
+                fontFamily: ArabicFonts.Cairo,
+                package: 'google_fonts_arabic',
+                color: Colors.white,
+                fontSize: 20),
+          ),
+        ),
+        DialogButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            color: Colors.deepOrange,
+            child: Text(
+              "Cancel",
+              style: TextStyle(color: Colors.white),
+            ))
+      ]).show();
+}
+
+_onChackBtnPressedOkay(context) {
+  Alert(
+    context: context,
+    title: "the first text",
+    type: AlertType.success,
+    desc: "order",
+    buttons: [
+      DialogButton(
+        child: Text(
+          "okay",
+          style: TextStyle(
+              fontFamily: ArabicFonts.Cairo,
+              package: 'google_fonts_arabic',
+              color: Colors.white,
+              fontSize: 20),
+        ),
+        onPressed: () {
+          Navigator.pop(context);
+          Navigator.pop(context);
+        },
+        color: Colors.deepOrange,
+      )
+    ],
+  ).show();
 }

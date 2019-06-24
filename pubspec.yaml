@@ -28,6 +28,7 @@ dependencies:
   flutter_google_places: ^0.1.4
   location: ^1.4.1
   scoped_model: ^1.0.1
+  rflutter_alert: ^1.0.2
 
 dev_dependencies:
   flutter_test:
