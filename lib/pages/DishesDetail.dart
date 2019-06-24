@@ -5,7 +5,7 @@ import 'package:food2go/scoped-model/items_model.dart';
 import 'package:google_fonts_arabic/fonts.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-import 'cart_ui.dart';
+import 'CartPage.dart';
 
 class DishesDetail extends StatefulWidget {
   // ProductsModel model;
@@ -41,10 +41,10 @@ class DishesDetail extends StatefulWidget {
       this.merchant_bg});
 
   @override
-  _ItemDetailState createState() => _ItemDetailState();
+  _DetailState createState() => _DetailState();
 }
 
-class _ItemDetailState extends State<DishesDetail> {
+class _DetailState extends State<DishesDetail> {
   // final ProductsModel productsmodel =ProductsModel();
 
   //=============================================================
@@ -278,7 +278,7 @@ class _ItemDetailState extends State<DishesDetail> {
                           ),
                           new SizedBox(
                               height: 50.0,
-                              child: MultiSelectChip(
+                              child: AdditionsSelect(
                                 reportList,
                                 onSelectionChanged: (selectedList) {
                                   setState(() {
@@ -551,17 +551,17 @@ class _ItemDetailState extends State<DishesDetail> {
   }
 }
 
-class MultiSelectChip extends StatefulWidget {
+class AdditionsSelect extends StatefulWidget {
   final List<String> reportList;
   final Function(List<String>) onSelectionChanged;
 
-  MultiSelectChip(this.reportList, {this.onSelectionChanged});
+  AdditionsSelect(this.reportList, {this.onSelectionChanged});
 
   @override
-  _MultiSelectChipState createState() => _MultiSelectChipState();
+  _AdditionsSelectState createState() => _AdditionsSelectState();
 }
 
-class _MultiSelectChipState extends State<MultiSelectChip> {
+class _AdditionsSelectState extends State<AdditionsSelect> {
   // String selectedChoice = "";
   List<String> selectedChoices = List();
 
