@@ -1,11 +1,9 @@
-// import 'package:foodtogo/model/Order.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 import '../model/Item.dart';
 
 class ProductsModel extends Model {
   List<Item> _cartList = [];
-  // Model_Order order;
   String baseUrl = 'http://mazzaya.net/restomax/mobileapp/api/';
   List<Item> get getCartList {
     return List.from(_cartList);

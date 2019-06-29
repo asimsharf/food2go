@@ -186,7 +186,7 @@ class CartPage extends StatelessWidget {
 _onValidBtnPressed(BuildContext context, ProductsModel model) {
   Alert(
       context: context,
-      title: "Your Order",
+      title: "ORDER DETAILS",
       content: Column(
         children: <Widget>[
           Row(
