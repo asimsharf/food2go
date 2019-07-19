@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:food2go/model/Item.dart';
+import 'package:food2go/model/Response.dart';
 import 'package:google_fonts_arabic/fonts.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -7,16 +10,19 @@ import 'package:scoped_model/scoped_model.dart';
 import '../scoped-model/items_model.dart';
 
 class CartPage extends StatelessWidget {
+  final globalKey = new GlobalKey<ScaffoldState>();
   String item_name;
   final Item item;
-  CartPage({this.item_name, this.item});
+  String merchant_id;
+  CartPage({this.item_name, this.item, this.merchant_id});
 
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant(
         builder: (BuildContext context, Widget child, ProductsModel model) {
       return Scaffold(
-        appBar: AppBar(
+        key: globalKey,
+        appBar: new AppBar(
           title: Text('Cart'),
           actions: <Widget>[
             Center(
@@ -51,7 +57,8 @@ class CartPage extends StatelessWidget {
               ),
               Expanded(
                 child: new MaterialButton(
-                  onPressed: () => _onValidBtnPressed(context, model),
+                  onPressed: () =>
+                      _onValidBtnPressed(context, model, globalKey),
                   color: Colors.red,
                   textColor: Colors.white,
                   elevation: 0.2,
@@ -183,7 +190,10 @@ class CartPage extends StatelessWidget {
   }
 }
 
-_onValidBtnPressed(BuildContext context, ProductsModel model) {
+_onValidBtnPressed(BuildContext context, ProductsModel model,
+    GlobalKey<ScaffoldState> globalKey) {
+  var res;
+  List<Responsse> jsn;
   Alert(
       context: context,
       title: "ORDER DETAILS",
@@ -229,7 +239,18 @@ _onValidBtnPressed(BuildContext context, ProductsModel model) {
       ),
       buttons: [
         DialogButton(
-          onPressed: () => _onChackBtnPressedOkay(context),
+          //client_token
+          //transaction_type
+          //payment_list
+          onPressed: () => {
+                res = model.placeOrder(
+                    "1",
+                    "pickup",
+                    "0dvgnimmnqh1wc52cee5764deecab20289679cba502dcf0",
+                    "cod",
+                    json.encode(model.getCartList).toString()),
+                jsn.add(Responsse.fromJson(json.decode(json.encode(res)))),
+              }, //_placeOrderButtonAction( context, model,globalKey),
           color: Colors.deepOrange,
           child: Text(
             "okay",
@@ -256,7 +277,7 @@ _onValidBtnPressed(BuildContext context, ProductsModel model) {
       ]).show();
 }
 
-_onChackBtnPressedOkay(context) {
+_onChackBtnPressedOkay(BuildContext context, ProductsModel model) {
   Alert(
     context: context,
     title: "Order Complet",
@@ -271,7 +292,7 @@ _onChackBtnPressedOkay(context) {
               package: 'google_fonts_arabic',
               color: Colors.white,
               fontSize: 20),
-        ),
+        ), //CartPage 274
         onPressed: () {
           Navigator.pop(context);
           Navigator.pop(context);
@@ -281,3 +302,179 @@ _onChackBtnPressedOkay(context) {
     ],
   ).show();
 }
+
+_placeOrderButtonAction(BuildContext context, ProductsModel model,
+    GlobalKey<ScaffoldState> globalKey) {
+  var mapper = "";
+  Responsse res;
+  mapper = model.placeOrder(
+      '1' /*merchant_id*/,
+      "pickup" /*transaction_type*/,
+      "0dvgnimmnqh1wc52cee5764deecab20289679cba502dcf0" /*client_token*/,
+      "cod" /*payment_list*/,
+      json.encode(model.getCartList).toString());
+  print("##################");
+  print(" mapper :" + mapper);
+  res = Responsse.fromJson(json.decode(json.encode(mapper)));
+  print("##################res: ${res}");
+
+  // if(mapper == ""){
+  //   print(' ################# from inside if code is equal :'+json.decode(mapper).code.toString());
+
+  // }else{
+
+  //   if (json.decode(mapper).code == 1) {
+  //   globalKey.currentState.showSnackBar(new SnackBar(
+  //     content: new Text(
+  //       "congratulations enjoy !",
+  //       style: TextStyle(color: Colors.white),
+  //     ),
+  //   ));
+  //   return;
+  // }else if (json.decode(mapper).code == 2) {
+  //   globalKey.currentState.showSnackBar(new SnackBar(
+  //     content: new Text(
+  //       "Sorry something wroung !",
+  //       style: TextStyle(color: Colors.white),
+  //     ),
+  //   ));
+  //   return;
+  // }else if (json.decode(mapper).code == 3) {
+  //   globalKey.currentState.showSnackBar(new SnackBar(
+  //     content: new Text(
+  //       "don't know Why !",
+  //       style: TextStyle(color: Colors.white),
+  //     ),
+  //   ));
+  //   return;
+  // }else {
+  //   globalKey.currentState.showSnackBar(new SnackBar(
+  //     content: new Text(
+  //       "No Way ):- !",
+  //       style: TextStyle(color: Colors.white),
+  //     ),
+  //   ));
+  //   return;
+  // }
+  //   print(' ################# from inside else code is equal :'+ json.decode(mapper).code.toString());
+  // }
+  print(model.placeOrder(
+      '1' /*merchant_id*/,
+      "cod" /*transaction_type*/,
+      "0dvgnimmnqh1wc52cee5764deecab20289679cba502dcf0" /*client_token*/,
+      "cod" /*payment_list*/,
+      json.encode(model.getCartList).toString()));
+
+  _onChackBtnPressedOkay(context) {
+    Alert(
+      context: context,
+      title: "Order Complet",
+      type: AlertType.success,
+      desc: "your order has been completed successfully",
+      buttons: [
+        DialogButton(
+          child: Text(
+            "okay",
+            style: TextStyle(
+                fontFamily: ArabicFonts.Cairo,
+                package: 'google_fonts_arabic',
+                color: Colors.white,
+                fontSize: 20),
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+            Navigator.pop(context);
+          },
+          color: Colors.deepOrange,
+        )
+      ],
+    ).show();
+  }
+}
+
+// _onOrderBtnPressed(BuildContext context, ProductsModel model) {
+//   Widget orderwidget;
+//     // print(model.placeOrder(1/*merchant_id*/,"cod"/*transaction_type*/,"0dvgnimmnqh1wc52cee5764deecab20289679cba502dcf0"/*client_token*/,"cod"/*payment_list*/,model.getCartList));
+// Response mapper = model.placeOrder(1/*merchant_id*/,"cod"/*transaction_type*/,"0dvgnimmnqh1wc52cee5764deecab20289679cba502dcf0"/*client_token*/,"cod"/*payment_list*/,json.encode(model.getCartList));
+//   if(mapper.code > 0){
+// print(' ################# from inside if code is equal :'+mapper.code.toString());
+//   }else{
+// print('################## from inside else code is equal :'+mapper.code.toString());
+//   }
+//   Alert(
+//       context: context,
+//       title: "ORDER DETAILS",
+//       content: Column(
+//         children: <Widget>[
+//           Row(
+//             children: <Widget>[
+//               new Text(
+//                 'Total Price: ${model.getCartPrice.toString()}',
+//                 style: TextStyle(
+//                     fontFamily: ArabicFonts.Cairo,
+//                     package: 'google_fonts_arabic',
+//                     color: Colors.grey,
+//                     fontSize: 15),
+//               )
+//             ],
+//           ),
+//           Row(
+//             children: <Widget>[
+//               new Text(
+//                 'Total Item: ${model.getCartList.length.toString()}',
+//                 style: TextStyle(
+//                     fontFamily: ArabicFonts.Cairo,
+//                     package: 'google_fonts_arabic',
+//                     color: Colors.grey,
+//                     fontSize: 15),
+//               )
+//             ],
+//           ),
+//           Row(
+//             children: <Widget>[
+//               new Text(
+//                 'Pyment method: Cash on delevery',
+//                 style: TextStyle(
+//                     fontFamily: ArabicFonts.Cairo,
+//                     package: 'google_fonts_arabic',
+//                     color: Colors.grey,
+//                     fontSize: 15),
+//               )
+//             ],
+//           ),
+//         ],
+//       ),
+//       buttons: [
+//         DialogButton(
+//           onPressed: //() => _onChackBtnPressedOkay(context,model),
+//           (){
+//             print("#########################################################");
+//             print(" modegetCartList" + model.getCartList.length.toString());
+//           print("#########################################################");
+//             print(model.placeOrder(1/*merchant_id*/,"cod"/*transaction_type*/,"0dvgnimmnqh1wc52cee5764deecab20289679cba502dcf0"/*client_token*/,"cod"/*payment_list*/,model.getCartList));
+//           },
+//           color: Colors.deepOrange,
+//           child: Text(
+//             "okay",
+//             style: TextStyle(
+//                 fontFamily: ArabicFonts.Cairo,
+//                 package: 'google_fonts_arabic',
+//                 color: Colors.white,
+//                 fontSize: 20),
+//           ),
+//         ),
+//         DialogButton(
+//             onPressed: () {
+//               Navigator.pop(context);
+//             },
+//             color: Colors.deepOrange,
+//             child: Text(
+//               "Cancel",
+//               style: TextStyle(
+//                   fontFamily: ArabicFonts.Cairo,
+//                   package: 'google_fonts_arabic',
+//                   color: Colors.white,
+//                   fontSize: 20),
+//             ))
+//       ]).show();
+// }

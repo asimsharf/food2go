@@ -147,7 +147,7 @@ class _DetailState extends State<DishesDetail> {
                     height: 200.0,
                   ),
 
-                  //==========================Item name===================================
+                  //========================== Item name===================================
                   new Card(
                     child: new Container(
                       width: screenSize.width,
@@ -213,7 +213,7 @@ class _DetailState extends State<DishesDetail> {
                       ),
                     ),
                   ),
-                  //=============================Description================================
+                  //============================= Description================================
                   new Card(
                     child: new Container(
                       width: screenSize.width,
@@ -251,7 +251,7 @@ class _DetailState extends State<DishesDetail> {
                       ),
                     ),
                   ),
-                  //============================Additions=================================
+                  //============================ Additions =================================
                   new Card(
                     child: new Container(
                       width: screenSize.width,
@@ -293,7 +293,7 @@ class _DetailState extends State<DishesDetail> {
                       ),
                     ),
                   ),
-                  //=========================Qty====================================
+                  //========================= Qty ====================================
                   new Card(
                     child: new Container(
                       width: screenSize.width,
@@ -352,7 +352,7 @@ class _DetailState extends State<DishesDetail> {
                       ),
                     ),
                   ),
-                  //==========================Size and price===================================
+                  //========================== Size and price ===================================
                   new Card(
                     child: new Container(
                       width: screenSize.width,
@@ -408,7 +408,7 @@ class _DetailState extends State<DishesDetail> {
                       ),
                     ),
                   ),
-                  //===========================message==================================
+                  //=========================== message ==================================
                   new Card(
                     child: new Container(
                       width: screenSize.width,
@@ -458,7 +458,8 @@ class _DetailState extends State<DishesDetail> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (BuildContext context) => CartPage()),
+                      builder: (BuildContext context) =>
+                          CartPage(merchant_id: widget.merchant_id)),
                 );
               },
               child: new Icon(Icons.shopping_cart),
@@ -498,8 +499,17 @@ class _DetailState extends State<DishesDetail> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () => model.addToCart(widget.item_id, qty, priceP,
-                      widget.photo, widget.item_name),
+                  onTap: () => model.addToCart(
+                      widget.item_id,
+                      widget.merchant_id,
+                      qty,
+                      priceP,
+                      widget.photo,
+                      widget.item_name,
+                      10,
+                      widget.cat_id,
+                      [],
+                      "message"),
                   child: new Container(
                     width: (screenSize.width - 20) / 2,
                     child: new Text(

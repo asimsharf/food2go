@@ -20,7 +20,6 @@ import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 import '../LoginClients/customviews/progress_dialog.dart';
 import '../LoginClients/futures/app_futures.dart';
-import '../LoginClients/models/User.dart';
 import '../LoginClients/models/base/EventObject.dart';
 import '../LoginClients/pages/splash_page.dart';
 import '../LoginClients/utils/app_shared_preferences.dart';
@@ -35,6 +34,7 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   final globalKey = new GlobalKey<ScaffoldState>();
   //__________________________________________________________________________________________________________//
+//  User user;
   User user;
 
   TextEditingController oldPasswordController =
@@ -1027,6 +1027,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
 //------------------------------------------------------------------------------
 
+  //Login Class for the application
   void _logoutFromTheApp() {
     AppSharedPreferences.clear();
     setState(() {
