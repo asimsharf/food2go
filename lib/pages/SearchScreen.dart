@@ -53,6 +53,7 @@ class _SearchScreenState extends State<SearchScreen> {
     }
   }
 
+
 //------------------------------------------------------------------------------
 
   Future<void> initUserProfile() async {
