@@ -100,7 +100,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   Future<void> initTransactionType() async {
     String transactiontype =
-    await AppSharedPreferences.getFromSession('transactionType');
+        await AppSharedPreferences.getFromSession('transactionType');
     setState(() {
       if (transactiontype != null || transactiontype != '') {
         transactionType = transactiontype;
@@ -147,979 +147,957 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return ScopedModelDescendant(
         builder: (BuildContext context, Widget child, ProductsModel model) {
-          return Scaffold(
-            key: globalKey,
-            appBar: new AppBar(
-              title: Text(
-                'Food2GO',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontFamily: ArabicFonts.Cairo,
-                  package: 'google_fonts_arabic',
-                ),
-              ),
-              actions: <Widget>[
-                IconButton(
-                  icon: Icon(
-                    Icons.shopping_cart,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CartPage(),
-                      ),
-                    );
-                  },
-                ),
-              ],
+      return Scaffold(
+        key: globalKey,
+        appBar: new AppBar(
+          title: Text(
+            'Food2GO',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontFamily: ArabicFonts.Cairo,
+              package: 'google_fonts_arabic',
             ),
-            drawer: new Drawer(
-                child: Container(
-                  alignment: Alignment.center,
-                  decoration: new BoxDecoration(
-                    image: new DecorationImage(
-                      image: new AssetImage("assets/images/drawerbg.jpg"),
-                      fit: BoxFit.cover,
-                    ),
+          ),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.shopping_cart,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CartPage(),
                   ),
-                  child: ListView(
-                    padding: EdgeInsets.zero,
-                    children: <Widget>[
-                      new UserAccountsDrawerHeader(
-                        accountName: new Text(
-                          ((userName == null) ? "User Name" : userName),
+                );
+              },
+            ),
+          ],
+        ),
+        drawer: new Drawer(
+            child: Container(
+          alignment: Alignment.center,
+          decoration: new BoxDecoration(
+            image: new DecorationImage(
+              image: new AssetImage("assets/images/drawerbg.jpg"),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              new UserAccountsDrawerHeader(
+                accountName: new Text(
+                  ((userName == null) ? "User Name" : userName),
                   style: TextStyle(
                     fontSize: 10.0,
                     fontFamily: ArabicFonts.Cairo,
                     package: 'google_fonts_arabic',
                   ),
-                        ),
-                        accountEmail:
-                        new Text(
-                            ((userEamil == null) ? "User Email" : userEamil),
-                            style: TextStyle(
-                              fontFamily: ArabicFonts.Cairo,
-                              package: 'google_fonts_arabic',
-                            )),
-                        currentAccountPicture: new CircleAvatar(
-                          backgroundColor: Colors.white,
-                          child: new Icon(
-                            Icons.person,
-                            color: Colors.deepOrange,
-                          ),
-                        ),
-                      ),
-                      new ListTile(
-                        leading: new CircleAvatar(
-                          backgroundColor: Colors.white,
-                          child: new Icon(
-                            Icons.home,
-                            color: Colors.deepOrange,
-                            size: 20.0,
-                          ),
-                        ),
-                        title: new Text("Home",
-                            style: TextStyle(
-                                fontFamily: ArabicFonts.Cairo,
-                                package: 'google_fonts_arabic',
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20.0)),
-                        onTap: () {},
-                      ),
-                      new ListTile(
-                        leading: new CircleAvatar(
-                          backgroundColor: Colors.white,
-                          child: new Icon(
-                            Icons.reorder,
-                            color: Colors.deepOrange,
-                            size: 20.0,
-                          ),
-                        ),
-                        title: new Text("My Order",
-                            style: TextStyle(
-                                fontFamily: ArabicFonts.Cairo,
-                                package: 'google_fonts_arabic',
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                fontSize: 20.0)),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              //CategoryItemsPages
-                              builder: (context) => CartPage(),
-                            ),
-                          );
-                        },
-                      ),
-                      new ListTile(
-                        leading: new CircleAvatar(
-                          backgroundColor: Colors.white,
-                          child: new Icon(
-                            Icons.favorite,
-                            color: Colors.deepOrange,
-                            size: 20.0,
-                          ),
-                        ),
-                        title: new Text("Favorites",
-                            style: TextStyle(
-                                fontFamily: ArabicFonts.Cairo,
-                                fontWeight: FontWeight.bold,
-                                package: 'google_fonts_arabic',
-                                color: Colors.white,
-                                fontSize: 20.0)),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => FavoritesPage(),
-                            ),
-                          );
-                        },
-                      ),
-                      new ListTile(
-                          leading: new CircleAvatar(
-                            backgroundColor: Colors.white,
-                            child: new Icon(
-                              Icons.local_offer,
-                              color: Colors.deepOrange,
-                              size: 20.0,
-                            ),
-                          ),
-                          title: new Text("Offers",
-                              style: TextStyle(
-                                  fontFamily: ArabicFonts.Cairo,
-                                  package: 'google_fonts_arabic',
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                  fontSize: 20.0)),
-                          onTap: () {}),
-                      new ListTile(
-                          leading: new CircleAvatar(
-                            backgroundColor: Colors.white,
-                            child: new Icon(
-                              Icons.local_offer,
-                              color: Colors.deepOrange,
-                              size: 20.0,
-                            ),
-                          ),
-                          title: new Text(
-                              (userToken == null) ? "userToken" : userToken,
-                              style: TextStyle(
-                                  fontFamily: ArabicFonts.Cairo,
-                                  package: 'google_fonts_arabic',
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                  fontSize: 20.0)),
-                          onTap: () {}),
-                      new ListTile(
-                          leading: new CircleAvatar(
-                            backgroundColor: Colors.white,
-                            child: new Icon(
-                              Icons.local_offer,
-                              color: Colors.deepOrange,
-                              size: 20.0,
-                            ),
-                          ),
-                          title: new Text(
-                              (transactionType == null)
-                                  ? "transactionType"
-                                  : transactionType,
-                              style: TextStyle(
-                                  fontFamily: ArabicFonts.Cairo,
-                                  package: 'google_fonts_arabic',
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                  fontSize: 20.0)),
-                          onTap: () {}),
-                      new ListTile(
-                        leading: new CircleAvatar(
-                          backgroundColor: Colors.white,
-                          child: new Icon(
-                            Icons.location_on,
-                            color: Colors.deepOrange,
-                            size: 20.0,
-                          ),
-                        ),
-                        title: new Text("Delivery Address",
-                            style: TextStyle(
-                                fontFamily: ArabicFonts.Cairo,
-                                package: 'google_fonts_arabic',
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                fontSize: 20.0)),
-                        onTap: () {},
-                      ),
-                      new Divider(
+                ),
+                accountEmail:
+                    new Text(((userEamil == null) ? "User Email" : userEamil),
+                        style: TextStyle(
+                          fontFamily: ArabicFonts.Cairo,
+                          package: 'google_fonts_arabic',
+                        )),
+                currentAccountPicture: new CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: new Icon(
+                    Icons.person,
+                    color: Colors.deepOrange,
+                  ),
+                ),
+              ),
+              new ListTile(
+                leading: new CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: new Icon(
+                    Icons.home,
+                    color: Colors.deepOrange,
+                    size: 20.0,
+                  ),
+                ),
+                title: new Text("Home",
+                    style: TextStyle(
+                        fontFamily: ArabicFonts.Cairo,
+                        package: 'google_fonts_arabic',
                         color: Colors.white,
-                      ),
-                      new ListTile(
-                        leading: new CircleAvatar(
-                          backgroundColor: Colors.white,
-                          child: new Icon(
-                            Icons.verified_user,
-                            color: Colors.deepOrange,
-                            size: 20.0,
-                          ),
-                        ),
-                        title: new Text("Login",
-                            style: TextStyle(
-                                fontFamily: ArabicFonts.Cairo,
-                                fontWeight: FontWeight.bold,
-                                package: 'google_fonts_arabic',
-                                color: Colors.white,
-                                fontSize: 20.0)),
-                        onTap: () {
-                          Navigator.popAndPushNamed(
-                              context, '/SplashPageLoginTow');
-                        },
-                      ),
-                      new ListTile(
-                        trailing: new CircleAvatar(
-                          backgroundColor: Colors.white,
-                          child: new Icon(
-                            Icons.verified_user,
-                            color: Colors.deepOrange,
-                            size: 20.0,
-                          ),
-                        ),
-                        title: new Text("Help",
-                            style: TextStyle(
-                                fontFamily: ArabicFonts.Cairo,
-                                package: 'google_fonts_arabic',
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                fontSize: 20.0)),
-                        onTap: () {},
-                      ),
-                      new ListTile(
-                        trailing: new CircleAvatar(
-                          backgroundColor: Colors.white,
-                          child: new Icon(
-                            Icons.info,
-                            color: Colors.deepOrange,
-                            size: 20.0,
-                          ),
-                        ),
-                        title: new Text("About Us",
-                            style: TextStyle(
-                                fontFamily: ArabicFonts.Cairo,
-                                package: 'google_fonts_arabic',
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                fontSize: 20.0)),
-                        onTap: () {},
-                      ),
-                      new ListTile(
-                        trailing: new CircleAvatar(
-                          backgroundColor: Colors.white,
-                          child: new Icon(
-                            Icons.exit_to_app,
-                            color: Colors.deepOrange,
-                            size: 20.0,
-                          ),
-                        ),
-                        title: new Text("SearchSecond",
-                            style: TextStyle(
-                                fontFamily: ArabicFonts.Cairo,
-                                package: 'google_fonts_arabic',
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20.0)),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => SearchPage(),
-                            ),
-                          );
-                        },
-                      ),
-                      new ListTile(
-                        trailing: new CircleAvatar(
-                          backgroundColor: Colors.white,
-                          child: new Icon(
-                            Icons.exit_to_app,
-                            color: Colors.deepOrange,
-                            size: 20.0,
-                          ),
-                        ),
-                        title: new Text("TherdSecond",
-                            style: TextStyle(
-                                fontFamily: ArabicFonts.Cairo,
-                                package: 'google_fonts_arabic',
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20.0)),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ContactsList(),
-                            ),
-                          );
-                        },
-                      ),
-                      new ListTile(
-                        trailing: new CircleAvatar(
-                          backgroundColor: Colors.white,
-                          child: new Icon(
-                            Icons.exit_to_app,
-                            color: Colors.deepOrange,
-                            size: 20.0,
-                          ),
-                        ),
-                        title: new Text(Texts.LOGOUT,
-                            style: TextStyle(
-                                fontFamily: ArabicFonts.Cairo,
-                                package: 'google_fonts_arabic',
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20.0)),
-                        onTap: () {
-                          showDialog(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20.0)),
+                onTap: () {},
+              ),
+              new ListTile(
+                leading: new CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: new Icon(
+                    Icons.reorder,
+                    color: Colors.deepOrange,
+                    size: 20.0,
+                  ),
+                ),
+                title: new Text("My Order",
+                    style: TextStyle(
+                        fontFamily: ArabicFonts.Cairo,
+                        package: 'google_fonts_arabic',
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 20.0)),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      //CategoryItemsPages
+                      builder: (context) => CartPage(),
+                    ),
+                  );
+                },
+              ),
+              new ListTile(
+                leading: new CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: new Icon(
+                    Icons.favorite,
+                    color: Colors.deepOrange,
+                    size: 20.0,
+                  ),
+                ),
+                title: new Text("Favorites",
+                    style: TextStyle(
+                        fontFamily: ArabicFonts.Cairo,
+                        fontWeight: FontWeight.bold,
+                        package: 'google_fonts_arabic',
+                        color: Colors.white,
+                        fontSize: 20.0)),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => FavoritesPage(),
+                    ),
+                  );
+                },
+              ),
+              new ListTile(
+                  leading: new CircleAvatar(
+                    backgroundColor: Colors.white,
+                    child: new Icon(
+                      Icons.local_offer,
+                      color: Colors.deepOrange,
+                      size: 20.0,
+                    ),
+                  ),
+                  title: new Text("Offers",
+                      style: TextStyle(
+                          fontFamily: ArabicFonts.Cairo,
+                          package: 'google_fonts_arabic',
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontSize: 20.0)),
+                  onTap: () {}),
+              new ListTile(
+                  leading: new CircleAvatar(
+                    backgroundColor: Colors.white,
+                    child: new Icon(
+                      Icons.local_offer,
+                      color: Colors.deepOrange,
+                      size: 20.0,
+                    ),
+                  ),
+                  title: new Text((userToken == null) ? "userToken" : userToken,
+                      style: TextStyle(
+                          fontFamily: ArabicFonts.Cairo,
+                          package: 'google_fonts_arabic',
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontSize: 20.0)),
+                  onTap: () {}),
+              new ListTile(
+                  leading: new CircleAvatar(
+                    backgroundColor: Colors.white,
+                    child: new Icon(
+                      Icons.local_offer,
+                      color: Colors.deepOrange,
+                      size: 20.0,
+                    ),
+                  ),
+                  title: new Text(
+                      (transactionType == null)
+                          ? "transactionType"
+                          : transactionType,
+                      style: TextStyle(
+                          fontFamily: ArabicFonts.Cairo,
+                          package: 'google_fonts_arabic',
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontSize: 20.0)),
+                  onTap: () {}),
+              new ListTile(
+                leading: new CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: new Icon(
+                    Icons.location_on,
+                    color: Colors.deepOrange,
+                    size: 20.0,
+                  ),
+                ),
+                title: new Text("Delivery Address",
+                    style: TextStyle(
+                        fontFamily: ArabicFonts.Cairo,
+                        package: 'google_fonts_arabic',
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 20.0)),
+                onTap: () {},
+              ),
+              new Divider(
+                color: Colors.white,
+              ),
+              new ListTile(
+                leading: new CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: new Icon(
+                    Icons.verified_user,
+                    color: Colors.deepOrange,
+                    size: 20.0,
+                  ),
+                ),
+                title: new Text("Login",
+                    style: TextStyle(
+                        fontFamily: ArabicFonts.Cairo,
+                        fontWeight: FontWeight.bold,
+                        package: 'google_fonts_arabic',
+                        color: Colors.white,
+                        fontSize: 20.0)),
+                onTap: () {
+                  Navigator.popAndPushNamed(context, '/SplashPageLoginTow');
+                },
+              ),
+              new ListTile(
+                trailing: new CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: new Icon(
+                    Icons.verified_user,
+                    color: Colors.deepOrange,
+                    size: 20.0,
+                  ),
+                ),
+                title: new Text("Help",
+                    style: TextStyle(
+                        fontFamily: ArabicFonts.Cairo,
+                        package: 'google_fonts_arabic',
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 20.0)),
+                onTap: () {},
+              ),
+              new ListTile(
+                trailing: new CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: new Icon(
+                    Icons.info,
+                    color: Colors.deepOrange,
+                    size: 20.0,
+                  ),
+                ),
+                title: new Text("About Us",
+                    style: TextStyle(
+                        fontFamily: ArabicFonts.Cairo,
+                        package: 'google_fonts_arabic',
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 20.0)),
+                onTap: () {},
+              ),
+              new ListTile(
+                trailing: new CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: new Icon(
+                    Icons.exit_to_app,
+                    color: Colors.deepOrange,
+                    size: 20.0,
+                  ),
+                ),
+                title: new Text("SearchSecond",
+                    style: TextStyle(
+                        fontFamily: ArabicFonts.Cairo,
+                        package: 'google_fonts_arabic',
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20.0)),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SearchPage(),
+                    ),
+                  );
+                },
+              ),
+              new ListTile(
+                trailing: new CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: new Icon(
+                    Icons.exit_to_app,
+                    color: Colors.deepOrange,
+                    size: 20.0,
+                  ),
+                ),
+                title: new Text("TherdSecond",
+                    style: TextStyle(
+                        fontFamily: ArabicFonts.Cairo,
+                        package: 'google_fonts_arabic',
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20.0)),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ContactsList(),
+                    ),
+                  );
+                },
+              ),
+              new ListTile(
+                trailing: new CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: new Icon(
+                    Icons.exit_to_app,
+                    color: Colors.deepOrange,
+                    size: 20.0,
+                  ),
+                ),
+                title: new Text(Texts.LOGOUT,
+                    style: TextStyle(
+                        fontFamily: ArabicFonts.Cairo,
+                        package: 'google_fonts_arabic',
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20.0)),
+                onTap: () {
+                  showDialog(
                     barrierDismissible: false,
                     context: globalKey.currentContext,
-                            child: _logOutDialog(),
+                    child: _logOutDialog(),
+                  );
+                },
+              ),
+            ],
+          ),
+        )),
+        body: new Container(
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: 0.0, right: 0.0, left: 0.0, bottom: 5.0),
+                child: TextField(
+                  //                onChanged: (text) {
+                  //                  text = text.toLowerCase();
+                  //                  setState(() {
+                  //                    _browse_restaurant =
+                  //                        _browse_restaurant.where((Model_Cards) {
+                  //                      var _Model_Cards_full_name =
+                  //                          Model_Cards.restaurant_name.toLowerCase();
+                  //                      return _Model_Cards_full_name.contains(text);
+                  //                    }).toList();
+                  //                  });
+                  //                },
+
+                  //onChanged: onSearchTextChanged,
+                  //                onChanged: (value) {
+                  //                  //filterSearchResults(value);
+                  //                },
+                  controller: TextSearcheditingController,
+                  decoration: InputDecoration(
+                      hintText: "Cuisine or restaurant name",
+                      hintStyle: TextStyle(
+                        fontFamily: ArabicFonts.Cairo,
+                        package: 'google_fonts_arabic',
+                      ),
+                      suffixIcon: InkWell(
+                        splashColor: Colors.deepOrangeAccent,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => FilterSearch(),
+                            ),
                           );
                         },
+                        child: Icon(
+                          FontAwesomeIcons.slidersH,
+                          color: Colors.deepOrange,
+                        ),
                       ),
-                    ],
-                  ),
-                )),
-            body: new Container(
-              child: Column(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        top: 0.0, right: 0.0, left: 0.0, bottom: 5.0),
-                    child: TextField(
-                      //                onChanged: (text) {
-                      //                  text = text.toLowerCase();
-                      //                  setState(() {
-                      //                    _browse_restaurant =
-                      //                        _browse_restaurant.where((Model_Cards) {
-                      //                      var _Model_Cards_full_name =
-                      //                          Model_Cards.restaurant_name.toLowerCase();
-                      //                      return _Model_Cards_full_name.contains(text);
-                      //                    }).toList();
-                      //                  });
-                      //                },
-
-                      //onChanged: onSearchTextChanged,
-                      //                onChanged: (value) {
-                      //                  //filterSearchResults(value);
-                      //                },
-                      controller: TextSearcheditingController,
-                      decoration: InputDecoration(
-                          hintText: "Cuisine or restaurant name",
-                          hintStyle: TextStyle(
-                            fontFamily: ArabicFonts.Cairo,
-                            package: 'google_fonts_arabic',
-                          ),
-                          suffixIcon: InkWell(
-                            splashColor: Colors.deepOrangeAccent,
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => FilterSearch(),
-                                ),
-                              );
-                            },
-                            child: Icon(
-                              FontAwesomeIcons.slidersH,
-                              color: Colors.deepOrange,
-                            ),
-                          ),
-                          prefixIcon: GestureDetector(
-                            child: Icon(
-                              Icons.search,
-                              color: Colors.deepOrange,
-                            ),
-                            onTap: () {},
-                          ),
-                          border: UnderlineInputBorder()),
-                    ),
-                  ),
-                  Expanded(
-                    child: loading
-                        ? Center(child: CircularProgressIndicator())
-                        : GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 1,
-                        childAspectRatio: MediaQuery
-                            .of(context)
-                            .size
-                            .width /
-                            (MediaQuery
-                                .of(context)
-                                .size
-                                .height / 2),
+                      prefixIcon: GestureDetector(
+                        child: Icon(
+                          Icons.search,
+                          color: Colors.deepOrange,
+                        ),
+                        onTap: () {},
                       ),
-                      itemCount: _browse_restaurant.length,
-                      itemBuilder: (BuildContext context, index) {
-                        final ResturantObj = _browse_restaurant[index];
-                        return filter == null || filter == ""
-                            ? new GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              new MaterialPageRoute(
-                                builder: (context) =>
-                                new MerchantDetails(
-                                  merchant_id:
-                                  ResturantObj.merchant_id,
-                                  restaurant_name:
-                                  ResturantObj.restaurant_name,
-                                  distance: ResturantObj.distance,
-                                  logo: ResturantObj.logo,
-                                  lontitude: ResturantObj
-                                      .map_coordinates.lontitude,
-                                  latitude: ResturantObj
-                                      .map_coordinates.latitude,
-                                  cuisine_name:
-                                  ResturantObj.cuisine,
-                                  merchant_bg:
-                                  ResturantObj.merchant_bg,
-                                  offers: ResturantObj.offers,
-                                  is_open: ResturantObj.is_open,
-                                  address: ResturantObj.address,
-                                  delivery_fee:
-                                  ResturantObj.delivery_fee,
-                                  delivery_estimation: ResturantObj
-                                      .delivery_estimation,
-                                ),
-                              ),
-                            );
-                          },
-                          child: new Card(
-                            child: new Column(
-                              children: [
-                                new Container(
-                                  width:
-                                  MediaQuery
-                                      .of(context)
-                                      .size
-                                      .width,
-                                  height: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .height /
-                                      4,
-                                  decoration: new BoxDecoration(
-                                    image: new DecorationImage(
-                                      image: new NetworkImage(
-                                          ResturantObj.merchant_bg),
-                                      fit: BoxFit.fitWidth,
-                                    ),
-                                  ),
-                                  child: new Row(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                    verticalDirection:
-                                    VerticalDirection.down,
-                                    children: <Widget>[
-                                      Container(
-                                        width: 60,
-                                        height: 60,
-                                        margin: EdgeInsets.all(50.0),
-                                        alignment: Alignment.center,
-                                        decoration: new BoxDecoration(
-                                          // color: Colors.deepOrangeAccent,
-                                            color: Colors.white12,
-                                            shape: BoxShape.circle,
-                                            boxShadow: [
-                                              new BoxShadow(
-                                                color: Colors
-                                                    .deepOrangeAccent,
-                                                blurRadius: 10.0,
-                                              ),
-                                            ]),
-                                        child: new Center(
-                                          child: new Text(
-                                            "${45}%",
-                                            style: TextStyle(
-                                                fontFamily:
-                                                ArabicFonts.Cairo,
-                                                package:
-                                                'google_fonts_arabic',
-                                                fontSize: 20.0,
-                                                color: Colors.white,
-                                                fontWeight:
-                                                FontWeight.bold),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                new Container(
-                                    width: MediaQuery
-                                        .of(context)
-                                        .size
-                                        .width,
-                                    height: MediaQuery
-                                        .of(context)
-                                        .size
-                                        .height /
-                                        7 +
-                                        60,
-                                    color:
-                                    Colors.white.withOpacity(1.0),
-                                    child: Column(
-                                      children: <Widget>[
-                                        Row(
-                                          children: <Widget>[
-                                            Expanded(
-                                              child: Text(
-                                                ResturantObj
-                                                    .restaurant_name,
-                                                overflow: TextOverflow
-                                                    .ellipsis,
-                                                style: TextStyle(
-                                                  fontFamily:
-                                                  ArabicFonts.Cairo,
-                                                  package:
-                                                  'google_fonts_arabic',
-                                                  fontSize: 18.0,
-                                                  fontWeight:
-                                                  FontWeight.bold,
-                                                  color: Colors.black,
-                                                ),
-                                              ),
-                                            ),
-                                            SmoothStarRating(
-                                              rating: 4,
-                                              size: 25,
-                                              color: Colors.yellow,
-                                              borderColor:
-                                              Colors.white70,
-                                              allowHalfRating: true,
-                                              starCount: 5,
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: <Widget>[
-                                            Expanded(
-                                              child: Text(
-                                                ResturantObj.cuisine,
-                                                overflow: TextOverflow
-                                                    .ellipsis,
-                                                style: Theme
-                                                    .of(context)
-                                                    .textTheme
-                                                    .body2
-                                                    .copyWith(
-                                                    color: Colors
-                                                        .black),
-                                              ),
-                                            ),
-                                            Text(
-                                              ResturantObj.is_open,
-                                              style: new TextStyle(
-                                                  fontFamily:
-                                                  ArabicFonts.Cairo,
-                                                  package:
-                                                  'google_fonts_arabic',
-                                                  color: Colors.blue,
-                                                  fontWeight:
-                                                  FontWeight.bold),
-                                            ),
-                                            SizedBox(
-                                              width: 2.0,
-                                            ),
-                                            Icon(
-                                              Icons.lock_open,
-                                              color: Colors.green,
-                                              size: 14.0,
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: <Widget>[
-                                            Expanded(
-                                              child: Text(
-                                                ResturantObj.address,
-                                                overflow: TextOverflow
-                                                    .ellipsis,
-                                                style: TextStyle(
-                                                    color:
-                                                    Colors.black),
-                                              ),
-                                            ),
-                                            TextIcon(
-                                              text:
-                                              '${ResturantObj.service}',
-                                              icon: FontAwesomeIcons
-                                                  .screwdriver,
-                                              isColumn: false,
-                                            ),
-                                            TextIcon(
-                                              text:
-                                              '${ResturantObj.distance}',
-                                              icon: FontAwesomeIcons
-                                                  .locationArrow,
-                                              isColumn: false,
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: <Widget>[
-                                            Expanded(
-                                              child: Text(
-                                                ResturantObj.offers,
-                                                style: TextStyle(
-                                                    fontFamily:
-                                                    ArabicFonts
-                                                        .Cairo,
-                                                    fontSize: 10.0,
-                                                    package:
-                                                    'google_fonts_arabic',
-                                                    color:
-                                                    Colors.black),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: <Widget>[
-                                            Expanded(
-                                              child: Text(
-                                                'Delevery free ${ResturantObj
-                                                    .delivery_fee}',
-                                                style: TextStyle(
-                                                    fontFamily:
-                                                    ArabicFonts
-                                                        .Cairo,
-                                                    package:
-                                                    'google_fonts_arabic',
-                                                    color:
-                                                    Colors.black),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    )),
-                              ],
-                            ),
-                          ),
-                        )
-                            : '${_browse_restaurant[index].restaurant_name}'
-                            .toLowerCase()
-                            .contains(filter.toLowerCase())
-                            ? new GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              new MaterialPageRoute(
-                                builder: (context) =>
-                                new MerchantDetails(
-                                  merchant_id:
-                                  ResturantObj.merchant_id,
-                                  restaurant_name: ResturantObj
-                                      .restaurant_name,
-                                  distance:
-                                  ResturantObj.distance,
-                                  logo: ResturantObj.logo,
-                                  lontitude: ResturantObj
-                                      .map_coordinates
-                                      .lontitude,
-                                  latitude: ResturantObj
-                                      .map_coordinates.latitude,
-                                  cuisine_name:
-                                  ResturantObj.cuisine,
-                                  merchant_bg:
-                                  ResturantObj.merchant_bg,
-                                  offers: ResturantObj.offers,
-                                  is_open: ResturantObj.is_open,
-                                  address: ResturantObj.address,
-                                  delivery_fee:
-                                  ResturantObj.delivery_fee,
-                                  delivery_estimation:
-                                  ResturantObj
-                                      .delivery_estimation,
-                                ),
-                              ),
-                            );
-                          },
-                          child: Card(
-                            child: Column(
-                              children: [
-                                new Container(
-                                  width: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .width,
-                                  height: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .height /
-                                      4,
-                                  decoration: new BoxDecoration(
-                                    image: new DecorationImage(
-                                      image: new NetworkImage(
-                                          ResturantObj.merchant_bg),
-                                      fit: BoxFit.fitWidth,
-                                    ),
-                                  ),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                    verticalDirection:
-                                    VerticalDirection.down,
-                                    children: <Widget>[
-                                      new Container(
-                                        width: 100,
-                                        height: 100,
-                                        margin:
-                                        EdgeInsets.all(50.0),
-                                        alignment: Alignment.center,
-                                        decoration:
-                                        new BoxDecoration(
-                                            color:
-                                            Colors.black12,
-                                            boxShadow: [
-                                              new BoxShadow(
-                                                color:
-                                                Colors.black26,
-                                                blurRadius: 1.0,
-                                              ),
-                                            ]),
-                                        child: new Center(
-                                          child: new Text(
-                                            "${45}%",
-                                            style: TextStyle(
-                                                fontFamily:
-                                                ArabicFonts
-                                                    .Cairo,
-                                                package:
-                                                'google_fonts_arabic',
-                                                fontSize: 20.0,
-                                                color: Colors.white,
-                                                fontWeight:
-                                                FontWeight
-                                                    .bold),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                new Container(
-                                    width: MediaQuery
-                                        .of(context)
-                                        .size
-                                        .width,
-                                    height: MediaQuery
-                                        .of(context)
-                                        .size
-                                        .height /
-                                        7 +
-                                        60,
-                                    color: Colors.white
-                                        .withOpacity(1.0),
-                                    child: Column(
-                                      children: <Widget>[
-                                        Row(
-                                          children: <Widget>[
-                                            Expanded(
-                                              child: Text(
-                                                ResturantObj
-                                                    .restaurant_name,
-                                                overflow:
-                                                TextOverflow
-                                                    .ellipsis,
-                                                style: TextStyle(
-                                                  fontFamily:
-                                                  ArabicFonts
-                                                      .Cairo,
-                                                  package:
-                                                  'google_fonts_arabic',
-                                                  fontSize: 18.0,
-                                                  fontWeight:
-                                                  FontWeight
-                                                      .bold,
-                                                  color:
-                                                  Colors.black,
-                                                ),
-                                              ),
-                                            ),
-                                            SmoothStarRating(
-                                              rating: 5,
-                                              color: Colors.yellow,
-                                              size: 25,
-                                              starCount: 5,
-                                            )
-                                          ],
-                                        ),
-                                        Row(
-                                          children: <Widget>[
-                                            Expanded(
-                                              child: Text(
-                                                "cat1,cat2,cat3",
-                                                style: Theme
-                                                    .of(
-                                                    context)
-                                                    .textTheme
-                                                    .body2
-                                                    .copyWith(
-                                                    color: Colors
-                                                        .black),
-                                              ),
-                                            ),
-                                            Text(
-                                              ResturantObj.is_open,
-                                              style: new TextStyle(
-                                                  fontFamily:
-                                                  ArabicFonts
-                                                      .Cairo,
-                                                  package:
-                                                  'google_fonts_arabic',
-                                                  color:
-                                                  Colors.blue,
-                                                  fontWeight:
-                                                  FontWeight
-                                                      .bold),
-                                            ),
-                                            SizedBox(
-                                              width: 2.0,
-                                            ),
-                                            Icon(
-                                              Icons.lock_open,
-                                              color: Colors.green,
-                                              size: 14.0,
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: <Widget>[
-                                            Expanded(
-                                              child: Text(
-                                                ResturantObj
-                                                    .cuisine,
-                                                style: TextStyle(
-                                                    color: Colors
-                                                        .black),
-                                              ),
-                                            ),
-                                            TextIcon(
-                                              text:
-                                              '${ResturantObj.service}',
-                                              icon: FontAwesomeIcons
-                                                  .screwdriver,
-                                              isColumn: false,
-                                            ),
-                                            TextIcon(
-                                              text:
-                                              '${ResturantObj.distance}',
-                                              icon: FontAwesomeIcons
-                                                  .locationArrow,
-                                              isColumn: false,
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: <Widget>[
-                                            Expanded(
-                                              child: Text(
-                                                ResturantObj.offers,
-                                                style: TextStyle(
-                                                    fontFamily:
-                                                    ArabicFonts
-                                                        .Cairo,
-                                                    fontSize: 10.0,
-                                                    package:
-                                                    'google_fonts_arabic',
-                                                    color: Colors
-                                                        .black),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: <Widget>[
-                                            Expanded(
-                                              child: Text(
-                                                ResturantObj
-                                                    .address,
-                                                style: TextStyle(
-                                                    fontFamily:
-                                                    ArabicFonts
-                                                        .Cairo,
-                                                    package:
-                                                    'google_fonts_arabic',
-                                                    color: Colors
-                                                        .black),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    )),
-                              ],
-                            ),
-                          ),
-                        )
-                            : new Container();
-                      },
-                    ),
-                  ),
-                ],
+                      border: UnderlineInputBorder()),
+                ),
               ),
-            ),
-            bottomNavigationBar: new Container(
-              color: Colors.white,
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: new MaterialButton(
-                      onPressed: () async {
-                        AppSharedPreferences.setDELEVERY(true);
-                      },
-                      color: Colors.red,
-                      textColor: Colors.white,
-                      elevation: 0.2,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: new Text("DELEVERY",
-                            style: TextStyle(
-                              fontFamily: ArabicFonts.Cairo,
-                              package: 'google_fonts_arabic',
-                            )),
+              Expanded(
+                child: loading
+                    ? Center(child: CircularProgressIndicator())
+                    : GridView.builder(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 1,
+                          childAspectRatio: MediaQuery.of(context).size.width /
+                              (MediaQuery.of(context).size.height / 2),
+                        ),
+                        itemCount: _browse_restaurant.length,
+                        itemBuilder: (BuildContext context, index) {
+                          final ResturantObj = _browse_restaurant[index];
+                          return filter == null || filter == ""
+                              ? new GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      new MaterialPageRoute(
+                                        builder: (context) =>
+                                            new MerchantDetails(
+                                              merchant_id:
+                                                  ResturantObj.merchant_id,
+                                              restaurant_name:
+                                                  ResturantObj.restaurant_name,
+                                              distance: ResturantObj.distance,
+                                              logo: ResturantObj.logo,
+                                              lontitude: ResturantObj
+                                                  .map_coordinates.lontitude,
+                                              latitude: ResturantObj
+                                                  .map_coordinates.latitude,
+                                              cuisine_name:
+                                                  ResturantObj.cuisine,
+                                              merchant_bg:
+                                                  ResturantObj.merchant_bg,
+                                              offers: ResturantObj.offers,
+                                              is_open: ResturantObj.is_open,
+                                              address: ResturantObj.address,
+                                              delivery_fee:
+                                                  ResturantObj.delivery_fee,
+                                              delivery_estimation: ResturantObj
+                                                  .delivery_estimation,
+                                            ),
+                                      ),
+                                    );
+                                  },
+                                  child: new Card(
+                                    child: new Column(
+                                      children: [
+                                        new Container(
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              4,
+                                          decoration: new BoxDecoration(
+                                            image: new DecorationImage(
+                                              image: new NetworkImage(
+                                                  ResturantObj.merchant_bg),
+                                              fit: BoxFit.fitWidth,
+                                            ),
+                                          ),
+                                          child: new Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            verticalDirection:
+                                                VerticalDirection.down,
+                                            children: <Widget>[
+                                              Container(
+                                                width: 60,
+                                                height: 60,
+                                                margin: EdgeInsets.all(50.0),
+                                                alignment: Alignment.center,
+                                                decoration: new BoxDecoration(
+                                                    // color: Colors.deepOrangeAccent,
+                                                    color: Colors.white12,
+                                                    shape: BoxShape.circle,
+                                                    boxShadow: [
+                                                      new BoxShadow(
+                                                        color: Colors
+                                                            .deepOrangeAccent,
+                                                        blurRadius: 10.0,
+                                                      ),
+                                                    ]),
+                                                child: new Center(
+                                                  child: new Text(
+                                                    "${45}%",
+                                                    style: TextStyle(
+                                                        fontFamily:
+                                                            ArabicFonts.Cairo,
+                                                        package:
+                                                            'google_fonts_arabic',
+                                                        fontSize: 20.0,
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        new Container(
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            height: MediaQuery.of(context)
+                                                        .size
+                                                        .height /
+                                                    7 +
+                                                60,
+                                            color:
+                                                Colors.white.withOpacity(1.0),
+                                            child: Column(
+                                              children: <Widget>[
+                                                Row(
+                                                  children: <Widget>[
+                                                    Expanded(
+                                                      child: Text(
+                                                        ResturantObj
+                                                            .restaurant_name,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: TextStyle(
+                                                          fontFamily:
+                                                              ArabicFonts.Cairo,
+                                                          package:
+                                                              'google_fonts_arabic',
+                                                          fontSize: 18.0,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SmoothStarRating(
+                                                      rating: 4,
+                                                      size: 25,
+                                                      color: Colors.yellow,
+                                                      borderColor:
+                                                          Colors.white70,
+                                                      allowHalfRating: true,
+                                                      starCount: 5,
+                                                    ),
+                                                  ],
+                                                ),
+                                                Row(
+                                                  children: <Widget>[
+                                                    Expanded(
+                                                      child: Text(
+                                                        ResturantObj.cuisine,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .body2
+                                                            .copyWith(
+                                                                color: Colors
+                                                                    .black),
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      ResturantObj.is_open,
+                                                      style: new TextStyle(
+                                                          fontFamily:
+                                                              ArabicFonts.Cairo,
+                                                          package:
+                                                              'google_fonts_arabic',
+                                                          color: Colors.blue,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                    SizedBox(
+                                                      width: 2.0,
+                                                    ),
+                                                    Icon(
+                                                      Icons.lock_open,
+                                                      color: Colors.green,
+                                                      size: 14.0,
+                                                    ),
+                                                  ],
+                                                ),
+                                                Row(
+                                                  children: <Widget>[
+                                                    Expanded(
+                                                      child: Text(
+                                                        ResturantObj.address,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.black),
+                                                      ),
+                                                    ),
+                                                    TextIcon(
+                                                      text:
+                                                          '${ResturantObj.service}',
+                                                      icon: FontAwesomeIcons
+                                                          .screwdriver,
+                                                      isColumn: false,
+                                                    ),
+                                                    TextIcon(
+                                                      text:
+                                                          '${ResturantObj.distance}',
+                                                      icon: FontAwesomeIcons
+                                                          .locationArrow,
+                                                      isColumn: false,
+                                                    ),
+                                                  ],
+                                                ),
+                                                Row(
+                                                  children: <Widget>[
+                                                    Expanded(
+                                                      child: Text(
+                                                        ResturantObj.offers,
+                                                        style: TextStyle(
+                                                            fontFamily:
+                                                                ArabicFonts
+                                                                    .Cairo,
+                                                            fontSize: 10.0,
+                                                            package:
+                                                                'google_fonts_arabic',
+                                                            color:
+                                                                Colors.black),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Row(
+                                                  children: <Widget>[
+                                                    Expanded(
+                                                      child: Text(
+                                                        'Delevery free ${ResturantObj.delivery_fee}',
+                                                        style: TextStyle(
+                                                            fontFamily:
+                                                                ArabicFonts
+                                                                    .Cairo,
+                                                            package:
+                                                                'google_fonts_arabic',
+                                                            color:
+                                                                Colors.black),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            )),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              : '${_browse_restaurant[index].restaurant_name}'
+                                      .toLowerCase()
+                                      .contains(filter.toLowerCase())
+                                  ? new GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          new MaterialPageRoute(
+                                            builder: (context) =>
+                                                new MerchantDetails(
+                                                  merchant_id:
+                                                      ResturantObj.merchant_id,
+                                                  restaurant_name: ResturantObj
+                                                      .restaurant_name,
+                                                  distance:
+                                                      ResturantObj.distance,
+                                                  logo: ResturantObj.logo,
+                                                  lontitude: ResturantObj
+                                                      .map_coordinates
+                                                      .lontitude,
+                                                  latitude: ResturantObj
+                                                      .map_coordinates.latitude,
+                                                  cuisine_name:
+                                                      ResturantObj.cuisine,
+                                                  merchant_bg:
+                                                      ResturantObj.merchant_bg,
+                                                  offers: ResturantObj.offers,
+                                                  is_open: ResturantObj.is_open,
+                                                  address: ResturantObj.address,
+                                                  delivery_fee:
+                                                      ResturantObj.delivery_fee,
+                                                  delivery_estimation:
+                                                      ResturantObj
+                                                          .delivery_estimation,
+                                                ),
+                                          ),
+                                        );
+                                      },
+                                      child: Card(
+                                        child: Column(
+                                          children: [
+                                            new Container(
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height /
+                                                  4,
+                                              decoration: new BoxDecoration(
+                                                image: new DecorationImage(
+                                                  image: new NetworkImage(
+                                                      ResturantObj.merchant_bg),
+                                                  fit: BoxFit.fitWidth,
+                                                ),
+                                              ),
+                                              child: Row(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                verticalDirection:
+                                                    VerticalDirection.down,
+                                                children: <Widget>[
+                                                  new Container(
+                                                    width: 100,
+                                                    height: 100,
+                                                    margin:
+                                                        EdgeInsets.all(50.0),
+                                                    alignment: Alignment.center,
+                                                    decoration:
+                                                        new BoxDecoration(
+                                                            color:
+                                                                Colors.black12,
+                                                            boxShadow: [
+                                                          new BoxShadow(
+                                                            color:
+                                                                Colors.black26,
+                                                            blurRadius: 1.0,
+                                                          ),
+                                                        ]),
+                                                    child: new Center(
+                                                      child: new Text(
+                                                        "${45}%",
+                                                        style: TextStyle(
+                                                            fontFamily:
+                                                                ArabicFonts
+                                                                    .Cairo,
+                                                            package:
+                                                                'google_fonts_arabic',
+                                                            fontSize: 20.0,
+                                                            color: Colors.white,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            new Container(
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                height: MediaQuery.of(context)
+                                                            .size
+                                                            .height /
+                                                        7 +
+                                                    60,
+                                                color: Colors.white
+                                                    .withOpacity(1.0),
+                                                child: Column(
+                                                  children: <Widget>[
+                                                    Row(
+                                                      children: <Widget>[
+                                                        Expanded(
+                                                          child: Text(
+                                                            ResturantObj
+                                                                .restaurant_name,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            style: TextStyle(
+                                                              fontFamily:
+                                                                  ArabicFonts
+                                                                      .Cairo,
+                                                              package:
+                                                                  'google_fonts_arabic',
+                                                              fontSize: 18.0,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color:
+                                                                  Colors.black,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        SmoothStarRating(
+                                                          rating: 5,
+                                                          color: Colors.yellow,
+                                                          size: 25,
+                                                          starCount: 5,
+                                                        )
+                                                      ],
+                                                    ),
+                                                    Row(
+                                                      children: <Widget>[
+                                                        Expanded(
+                                                          child: Text(
+                                                            "cat1,cat2,cat3",
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .body2
+                                                                .copyWith(
+                                                                    color: Colors
+                                                                        .black),
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          ResturantObj.is_open,
+                                                          style: new TextStyle(
+                                                              fontFamily:
+                                                                  ArabicFonts
+                                                                      .Cairo,
+                                                              package:
+                                                                  'google_fonts_arabic',
+                                                              color:
+                                                                  Colors.blue,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                        SizedBox(
+                                                          width: 2.0,
+                                                        ),
+                                                        Icon(
+                                                          Icons.lock_open,
+                                                          color: Colors.green,
+                                                          size: 14.0,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Row(
+                                                      children: <Widget>[
+                                                        Expanded(
+                                                          child: Text(
+                                                            ResturantObj
+                                                                .cuisine,
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .black),
+                                                          ),
+                                                        ),
+                                                        TextIcon(
+                                                          text:
+                                                              '${ResturantObj.service}',
+                                                          icon: FontAwesomeIcons
+                                                              .screwdriver,
+                                                          isColumn: false,
+                                                        ),
+                                                        TextIcon(
+                                                          text:
+                                                              '${ResturantObj.distance}',
+                                                          icon: FontAwesomeIcons
+                                                              .locationArrow,
+                                                          isColumn: false,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Row(
+                                                      children: <Widget>[
+                                                        Expanded(
+                                                          child: Text(
+                                                            ResturantObj.offers,
+                                                            style: TextStyle(
+                                                                fontFamily:
+                                                                    ArabicFonts
+                                                                        .Cairo,
+                                                                fontSize: 10.0,
+                                                                package:
+                                                                    'google_fonts_arabic',
+                                                                color: Colors
+                                                                    .black),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Row(
+                                                      children: <Widget>[
+                                                        Expanded(
+                                                          child: Text(
+                                                            ResturantObj
+                                                                .address,
+                                                            style: TextStyle(
+                                                                fontFamily:
+                                                                    ArabicFonts
+                                                                        .Cairo,
+                                                                package:
+                                                                    'google_fonts_arabic',
+                                                                color: Colors
+                                                                    .black),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                )),
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                  : new Container();
+                        },
                       ),
-                    ),
+              ),
+            ],
+          ),
+        ),
+        bottomNavigationBar: new Container(
+          color: Colors.white,
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: new MaterialButton(
+                  onPressed: () async {
+                    AppSharedPreferences.setDELEVERY(true);
+                  },
+                  color: Colors.red,
+                  textColor: Colors.white,
+                  elevation: 0.2,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: new Text("DELEVERY",
+                        style: TextStyle(
+                          fontFamily: ArabicFonts.Cairo,
+                          package: 'google_fonts_arabic',
+                        )),
                   ),
-                  Expanded(
-                    child: new MaterialButton(
-                      onPressed: () async {
-                        AppSharedPreferences.setPICKUP(true);
-                      },
-                      color: Colors.red,
-                      textColor: Colors.white,
-                      elevation: 0.2,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: new Text(
-                          "PICK-UP",
+                ),
+              ),
+              Expanded(
+                child: new MaterialButton(
+                  onPressed: () async {
+                    AppSharedPreferences.setPICKUP(true);
+                  },
+                  color: Colors.red,
+                  textColor: Colors.white,
+                  elevation: 0.2,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: new Text(
+                      "PICK-UP",
                       style: TextStyle(
                         fontFamily: ArabicFonts.Cairo,
                         package: 'google_fonts_arabic',
                       ),
-                        ),
-                      ),
                     ),
                   ),
-                ],
+                ),
               ),
-            ),
-          );
-        });
+            ],
+          ),
+        ),
+      );
+    });
   }
 
   //_________________________________________________________________________________________//

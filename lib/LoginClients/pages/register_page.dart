@@ -25,7 +25,7 @@ class RegisterPageState extends State<RegisterPage> {
   TextEditingController passwordController =
       new TextEditingController(text: "");
   TextEditingController cpasswordController =
-  new TextEditingController(text: "");
+      new TextEditingController(text: "");
 
 //------------------------------------------------------------------------------
 

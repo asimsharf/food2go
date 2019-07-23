@@ -244,15 +244,16 @@ _onValidBtnPressed(BuildContext context, ProductsModel model,
           ),
         ],
       ),
+
+
       buttons: [
         DialogButton(
           onPressed: () => {
                 res = model.placeOrder(
                   1,
                   json.encode(model.getCartList).toString(),
-                )
-  ,
-  },
+                ),
+              },
           color: Colors.deepOrange,
           child: Text(
             "okay",

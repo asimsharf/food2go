@@ -121,8 +121,7 @@ class ProductsModel extends Model {
     ).then(
       (response) {
         List data = json.decode(response.body);
-        return """ ${json.encode(
-            data[0].toString())} """; // this means multi lines of String
+        return """ ${json.encode(data[0].toString())} """; // this means multi lines of String
       },
     );
   }
