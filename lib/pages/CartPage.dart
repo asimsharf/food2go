@@ -248,7 +248,9 @@ _onValidBtnPressed(BuildContext context, ProductsModel model,
         DialogButton(
           onPressed: () => {
                 res = model.placeOrder(
-                    1, json.encode(model.getCartList).toString())
+                  1,
+                  json.encode(model.getCartList).toString(),
+                )
   ,
   },
           color: Colors.deepOrange,

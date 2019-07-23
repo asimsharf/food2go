@@ -60,7 +60,8 @@ Future<EventObject> loginUser(String userEmail, String password) async {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-Future<EventObject> registerUser(String firstName,
+Future<EventObject> registerUser(
+    String firstName,
     String lastName,
     String contactPhone,
     String emailAddress,
