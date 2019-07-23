@@ -4,7 +4,6 @@ String allPostsToJson(List<Item> data) {
   final dyn = new List<dynamic>.from(data.map((x) => x.toJson()));
   return json.encode(dyn);
 }
-
 List<Item> allPostsFromJson(String str) {
   final jsonData = json.decode(str);
   return new List<Item>.from(jsonData.map((x) => Item.fromJson(x)));
@@ -24,15 +23,6 @@ class Item {
   int discount;
   int category_id;
 
-  // "item_id": itemList.item_id,
-  //         "qty": qty,
-  //         "price": price,
-  //         "sub_item":,
-  //         "cooking_ref":,
-  //         "ingredients":,
-  //         "order_notes":,
-  //         "discount":0,
-  //         "category_id":7,
 
   Item(this.item_id,this.merchant_id, this.qty, this.price, this.photo, this.item_name,this.sub_item,this.cooking_ref,this.ingredients,this.order_notes,this.discount,this.category_id);
 

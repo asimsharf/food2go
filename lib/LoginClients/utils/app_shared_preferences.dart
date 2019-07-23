@@ -1,9 +1,7 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../models/User.dart';
 import '../utils/constants.dart';
 
 class AppSharedPreferences {
@@ -19,6 +17,11 @@ class AppSharedPreferences {
     prefs.clear();
   }
 
+  static Future<bool> deleteFromSession(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.remove(key);
+  }
+
 ///////////////////////////////////////////////////////////////////////////////
   static Future<bool> isUserLoggedIn() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -30,16 +33,30 @@ class AppSharedPreferences {
     return prefs.setBool(SharedPreferenceKeys.IS_USER_LOGGED_IN, isLoggedIn);
   }
 
-///////////////////////////////////////////////////////////////////////////////
-  static Future<User> getUserProfile() async {
+  static Future<void> setPICKUP(bool isPickupTrue) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return User.fromJson(
-        json.decode(prefs.getString(SharedPreferenceKeys.USER)));
+    return prefs.setBool('TRANSACTION_TYPE_IS_PICKUP', isPickupTrue);
   }
 
-  static Future<void> setUserProfile(User user) async {
+  static Future<void> setDELEVERY(bool isDeleveryTrue) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String userProfileJson = json.encode(user);
-    return prefs.setString(SharedPreferenceKeys.USER, userProfileJson);
+    return prefs.setBool('TRANSACTION_TYPE_IS_DELEVERY', isDeleveryTrue);
+  }
+
+///////////////////////////////////////////////////////////////////////////////
+  static Future<Object> getFromSession(String str) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString(str);
+  }
+
+  static Future<bool> setInSession(String key, String value) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString(key, value);
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
   }
 }

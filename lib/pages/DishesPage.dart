@@ -70,7 +70,6 @@ class _DishesPage extends State<DishesPage> {
                 itemCount: _dishes.length,
                 itemBuilder: (BuildContext context, int index) {
                   final Dishes = _dishes[index];
-                  final priceslist = Dishes.prices;
                   return new GestureDetector(
                     child: new Container(
                         decoration:
@@ -186,6 +185,8 @@ class _DishesPage extends State<DishesPage> {
                         MaterialPageRoute(
                           builder: (context) => DishesDetail(
                               item_id: Dishes.item_id,
+                              cat_id: widget.cat_id,
+                              merchant_id: widget.merchant_id,
                               photo: Dishes.photo,
                               item_name: Dishes.item_name,
                               item_description: Dishes.item_description,

@@ -39,7 +39,8 @@ class _AppState extends State<App> {
           debugShowCheckedModeBanner: false,
 //        home: SplashPageLoginTow(),
           home: SplashScreenPage(),
-          routes: routes),
+          routes: routes
+      ),
     );
   }
 }

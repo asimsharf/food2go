@@ -66,10 +66,14 @@ class SnackBarText {
   static const String ENTER_PASS = "Please Enter your Password";
   static const String ENTER_NEW_PASS = "Please Enter your New Password";
   static const String ENTER_OLD_PASS = "Please Enter your Old Password";
+  static const String ENTER_CONFIRMED_PASS = "Please Confirme your Password";
   static const String ENTER_EMAIL = "Please Enter your Email Id";
   static const String ENTER_VALID_MAIL = "Please Enter Valid Email Id";
-  static const String ENTER_NAME = "Please Enter your Name";
+  static const String ENTER_FIRST_NAME = "Please Enter your First Name";
+  static const String ENTER_LAST = "Please Enter your Last Name";
+  static const String ENTER_PHONE = "Please Enter your Phone Number";
   static const String INVALID_OLD_PASSWORD = "Invalid Old Password";
+  static const String MISMATCH_PASS = "Sorry But Passwords Are Mismatch";
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -80,10 +84,14 @@ class Texts {
   static const String REGISTER = "REGISTER";
   static const String PASSWORD = "Password";
   static const String OLD_PASSWORD = "Old Password";
+  static const String CONFIRME_PASSWORD = "Confirme Password";
   static const String NEW_PASSWORD = "New Password";
   static const String CHANGE_PASSWORD = "CHANGE PASSWORD";
   static const String LOGOUT = "LOGOUT";
   static const String EMAIL = "Email";
   static const String NAME = "Name";
+  static const String FIRST_NAME = "First Name";
+  static const String LAST_NAME = "Last Name";
+  static const String PHONE_NUMBER = " Phone Number";
 }
 ///////////////////////////////////////////////////////////////////////////////

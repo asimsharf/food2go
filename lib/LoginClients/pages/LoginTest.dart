@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:food2go/model/Session.dart';
 
 import '../customviews/progress_dialog.dart';
 import '../futures/app_futures.dart';
@@ -19,6 +20,7 @@ class LoginTestState extends State<LoginTest> {
   final globalKey = new GlobalKey<ScaffoldState>();
 
   User user;
+  UserSession userSession;
 
   TextEditingController oldPasswordController =
       new TextEditingController(text: "");
@@ -31,20 +33,18 @@ class LoginTestState extends State<LoginTest> {
   @override
   Future<void> didChangeDependencies() async {
     super.didChangeDependencies();
-    if (user == null) {
+    if (userSession == null) {
       await initUserProfile();
     }
   }
-
 //------------------------------------------------------------------------------
 
   Future<void> initUserProfile() async {
-    User up = await AppSharedPreferences.getUserProfile();
+    UserSession up = await AppSharedPreferences.getFromSession('userName');
     setState(() {
-      user = up;
+      userSession = up;
     });
   }
-
 //------------------------------------------------------------------------------
 
   static ProgressDialog progressDialog = ProgressDialog.getProgressDialog(

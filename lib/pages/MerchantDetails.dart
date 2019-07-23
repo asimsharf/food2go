@@ -79,7 +79,6 @@ class _CreateCenter extends State<MerchantDetails> {
 
   @override
   Widget build(BuildContext context) {
-    double x;
     return Scaffold(
       body: Stack(fit: StackFit.passthrough, children: <Widget>[
         SafeArea(

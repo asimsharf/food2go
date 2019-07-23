@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food2go/model/MazzayaResponse.dart';
 
 import '../customviews/progress_dialog.dart';
 import '../futures/app_futures.dart';
@@ -17,12 +18,14 @@ class RegisterPageState extends State<RegisterPage> {
   ProgressDialog progressDialog =
       ProgressDialog.getProgressDialog(ProgressDialogTitles.USER_REGISTER);
 
-  TextEditingController nameController = new TextEditingController(text: "");
-
+  TextEditingController fnameController = new TextEditingController(text: "");
+  TextEditingController lnameController = new TextEditingController(text: "");
+  TextEditingController phoneController = new TextEditingController(text: "");
   TextEditingController emailController = new TextEditingController(text: "");
-
   TextEditingController passwordController =
       new TextEditingController(text: "");
+  TextEditingController cpasswordController =
+  new TextEditingController(text: "");
 
 //------------------------------------------------------------------------------
 
@@ -88,11 +91,17 @@ class RegisterPageState extends State<RegisterPage> {
               child: new Column(
                 children: <Widget>[
 //------------------------------------------------------------------------------
-                  _nameContainer(),
+                  _fnameContainer(),
+//------------------------------------------------------------------------------
+                  _lnameContainer(),
+//------------------------------------------------------------------------------
+                  _phoneContainer(),
 //------------------------------------------------------------------------------
                   _emailContainer(),
 //------------------------------------------------------------------------------
                   _passwordContainer(),
+//------------------------------------------------------------------------------
+                  _cpasswordContainer(),
 //------------------------------------------------------------------------------
                   _registerButtonContainer(),
 //------------------------------------------------------------------------------
@@ -105,18 +114,53 @@ class RegisterPageState extends State<RegisterPage> {
   }
 
 //------------------------------------------------------------------------------
-  Widget _nameContainer() {
+  Widget _fnameContainer() {
     return new Container(
         child: new TextFormField(
-            controller: nameController,
+            controller: fnameController,
             decoration: InputDecoration(
-                suffixIcon: new Icon(
-                  Icons.face,
-                  color: Colors.white,
-                ),
-                labelText: Texts.NAME,
-                labelStyle: TextStyle(fontSize: 18.0, color: Colors.white)),
+              suffixIcon: new Icon(
+                Icons.face,
+                color: Colors.white,
+              ),
+              labelText: Texts.FIRST_NAME,
+              labelStyle: TextStyle(fontSize: 18.0, color: Colors.white),
+            ),
             keyboardType: TextInputType.text),
+        margin: EdgeInsets.only(bottom: 5.0));
+  }
+
+//------------------------------------------------------------------------------
+  Widget _lnameContainer() {
+    return new Container(
+        child: new TextFormField(
+            controller: lnameController,
+            decoration: InputDecoration(
+              suffixIcon: new Icon(
+                Icons.face,
+                color: Colors.white,
+              ),
+              labelText: Texts.LAST_NAME,
+              labelStyle: TextStyle(fontSize: 18.0, color: Colors.white),
+            ),
+            keyboardType: TextInputType.text),
+        margin: EdgeInsets.only(bottom: 5.0));
+  }
+
+//------------------------------------------------------------------------------
+  Widget _phoneContainer() {
+    return new Container(
+        child: new TextFormField(
+            controller: phoneController,
+            decoration: InputDecoration(
+              suffixIcon: new Icon(
+                Icons.phone,
+                color: Colors.white,
+              ),
+              labelText: Texts.PHONE_NUMBER,
+              labelStyle: TextStyle(fontSize: 18.0, color: Colors.white),
+            ),
+            keyboardType: TextInputType.number),
         margin: EdgeInsets.only(bottom: 5.0));
   }
 
@@ -147,6 +191,24 @@ class RegisterPageState extends State<RegisterPage> {
                 color: Colors.white,
               ),
               labelText: Texts.PASSWORD,
+              labelStyle: TextStyle(fontSize: 18.0, color: Colors.white)),
+          keyboardType: TextInputType.text,
+          obscureText: true,
+        ),
+        margin: EdgeInsets.only(bottom: 35.0));
+  }
+
+//------------------------------------------------------------------------------
+  Widget _cpasswordContainer() {
+    return new Container(
+        child: new TextFormField(
+          controller: cpasswordController,
+          decoration: InputDecoration(
+              suffixIcon: new Icon(
+                Icons.vpn_key,
+                color: Colors.white,
+              ),
+              labelText: Texts.CONFIRME_PASSWORD,
               labelStyle: TextStyle(fontSize: 18.0, color: Colors.white)),
           keyboardType: TextInputType.text,
           obscureText: true,
@@ -187,10 +249,30 @@ class RegisterPageState extends State<RegisterPage> {
 
 //------------------------------------------------------------------------------
   void _registerButtonAction() {
-    if (nameController.text == "") {
+    if (fnameController.text == "") {
       globalKey.currentState.showSnackBar(new SnackBar(
         content: new Text(
-          SnackBarText.ENTER_NAME,
+          SnackBarText.ENTER_FIRST_NAME,
+          style: TextStyle(color: Colors.white),
+        ),
+      ));
+      return;
+    }
+
+    if (lnameController.text == "") {
+      globalKey.currentState.showSnackBar(new SnackBar(
+        content: new Text(
+          SnackBarText.ENTER_LAST,
+          style: TextStyle(color: Colors.white),
+        ),
+      ));
+      return;
+    }
+
+    if (phoneController.text == "") {
+      globalKey.currentState.showSnackBar(new SnackBar(
+        content: new Text(
+          SnackBarText.ENTER_PHONE,
           style: TextStyle(color: Colors.white),
         ),
       ));
@@ -214,58 +296,59 @@ class RegisterPageState extends State<RegisterPage> {
       return;
     }
 
-    if (emailController.text == "") {
-      globalKey.currentState.showSnackBar(new SnackBar(
-        content: new Text(
-          SnackBarText.ENTER_EMAIL,
-          style: TextStyle(color: Colors.white),
-        ),
-      ));
-      return;
-    }
-
     if (passwordController.text == "") {
       globalKey.currentState.showSnackBar(new SnackBar(
         content: new Text(SnackBarText.ENTER_PASS),
       ));
       return;
     }
+
+    if (cpasswordController.text == "") {
+      globalKey.currentState.showSnackBar(new SnackBar(
+        content: new Text(SnackBarText.ENTER_CONFIRMED_PASS),
+      ));
+      return;
+    }
+
     FocusScope.of(context).requestFocus(new FocusNode());
     progressDialog.showProgress();
     _registerUser(
-        nameController.text, emailController.text, passwordController.text);
+        fnameController.text,
+        lnameController.text,
+        phoneController.text,
+        emailController.text,
+        passwordController.text,
+        cpasswordController.text);
   }
 
 //------------------------------------------------------------------------------
-  void _registerUser(String name, String emailId, String password) async {
-    EventObject eventObject = await registerUser(name, emailId, password);
+  void _registerUser(String firstName, String lastName, String contactPhone,
+      String emailAddress, String password, String cPassword) async {
+    MazzayaResponse mazzayaResponse;
+    EventObject eventObject = await registerUser(
+        firstName, lastName, contactPhone, emailAddress, password, cPassword);
+
+    if (eventObject.object != null && eventObject.object != '') {
+      mazzayaResponse = eventObject.object;
+    }
+
     switch (eventObject.id) {
-      case EventConstants.USER_REGISTRATION_SUCCESSFUL:
+      case 1:
         {
           setState(() {
             globalKey.currentState.showSnackBar(new SnackBar(
-              content: new Text(SnackBarText.REGISTER_SUCCESSFUL),
+              content: new Text(mazzayaResponse.msg),
             ));
             progressDialog.hideProgress();
             _goToLoginScreen();
           });
         }
         break;
-      case EventConstants.USER_ALREADY_REGISTERED:
+      case 2:
         {
           setState(() {
             globalKey.currentState.showSnackBar(new SnackBar(
-              content: new Text(SnackBarText.USER_ALREADY_REGISTERED),
-            ));
-            progressDialog.hideProgress();
-          });
-        }
-        break;
-      case EventConstants.USER_REGISTRATION_UN_SUCCESSFUL:
-        {
-          setState(() {
-            globalKey.currentState.showSnackBar(new SnackBar(
-              content: new Text(SnackBarText.REGISTER_UN_SUCCESSFUL),
+              content: new Text(mazzayaResponse.msg),
             ));
             progressDialog.hideProgress();
           });

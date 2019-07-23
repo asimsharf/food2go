@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food2go/model/MazzayaResponse.dart';
 import 'package:food2go/pages/SearchScreen.dart';
 
 import '../customviews/progress_dialog.dart';
@@ -171,33 +172,38 @@ class LoginPageState extends State<LoginPage> {
       ));
       return;
     }
+
     FocusScope.of(context).requestFocus(new FocusNode());
     progressDialog.showProgress();
     _loginUser(emailController.text, passwordController.text);
   }
 
 //------------------------------------------------------------------------------
-  void _loginUser(String id, String password) async {
-    EventObject eventObject = await loginUser(id, password);
+  void _loginUser(String email, String password) async {
+    MazzayaResponse mazzayaResponse;
+    EventObject eventObject = await loginUser(email, password);
+    if (eventObject.object != null && eventObject.object != '') {
+      mazzayaResponse = eventObject.object;
+    }
     switch (eventObject.id) {
-      case EventConstants.LOGIN_USER_SUCCESSFUL:
+      case 1:
         {
           setState(() {
             AppSharedPreferences.setUserLoggedIn(true);
-            AppSharedPreferences.setUserProfile(eventObject.object);
+            AppSharedPreferences.setInSession('email', email);
             globalKey.currentState.showSnackBar(new SnackBar(
-              content: new Text(SnackBarText.LOGIN_SUCCESSFUL),
+              content: new Text(mazzayaResponse.msg),
             ));
             progressDialog.hideProgress();
             _goToHomeScreen();
           });
         }
         break;
-      case EventConstants.LOGIN_USER_UN_SUCCESSFUL:
+      case 2:
         {
           setState(() {
             globalKey.currentState.showSnackBar(new SnackBar(
-              content: new Text(SnackBarText.LOGIN_UN_SUCCESSFUL),
+              content: new Text(mazzayaResponse.msg),
             ));
             progressDialog.hideProgress();
           });
@@ -217,6 +223,7 @@ class LoginPageState extends State<LoginPage> {
   }
 
 //------------------------------------------------------------------------------
+
   void _goToHomeScreen() {
     Navigator.pushReplacement(
       context,
@@ -225,11 +232,13 @@ class LoginPageState extends State<LoginPage> {
   }
 
 //------------------------------------------------------------------------------
+
   void _goToRegisterScreen() {
     Navigator.pushReplacement(
       context,
       new MaterialPageRoute(builder: (context) => new RegisterPage()),
     );
   }
+
 //------------------------------------------------------------------------------
 }

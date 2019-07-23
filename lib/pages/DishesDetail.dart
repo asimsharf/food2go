@@ -458,8 +458,7 @@ class _DetailState extends State<DishesDetail> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          CartPage(merchant_id: widget.merchant_id)),
+                      builder: (BuildContext context) => CartPage()),
                 );
               },
               child: new Icon(Icons.shopping_cart),
